@@ -8,7 +8,7 @@ include_once("wordix.php");
 
 /* Hernandez Martín - FAI-4433 - TUDW - martinalejandrohernandez1@gmail.com - MartinCba  */
 /* Bucarey Mateo - FAI-4319 - TUDW - mateobucarey017@gmail.com - mateobucarey */
-/* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github */
+/* Borghese Nicolás - FAI-997 - TUDW - nicolasborghese@hotmail.com - NicolasBorghese */
 
 
 
