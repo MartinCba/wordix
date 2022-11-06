@@ -7,7 +7,7 @@ include_once("wordix.php");
 
 
 /* Hernandez Martín - FAI-4433 - TUDW - martinalejandrohernandez1@gmail.com - MartinCba  */
-/* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github */
+/* Bucarey Mateo - FAI-4319 - TUDW - mateobucarey017@gmail.com - mateobucarey */
 /* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github */
 
 
@@ -25,11 +25,63 @@ function cargarColeccionPalabras()
     $coleccionPalabras = [
         "MUJER", "QUESO", "FUEGO", "CASAS", "RASGO",
         "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
-        "VERDE", "MELON", "YUYOS", "PIANO", "PISOS"
-        /* ... COMPLETAR ... Agregar 5 palabras más */
+        "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
+        "NARIZ", "TIGRE", "BICIS", "LIMON", "FRENO"
     ];
 
     return ($coleccionPalabras);
+}
+
+/**
+ * Se obtiene los datos de la partida con palabra elegida
+ * @return array 
+ */
+
+function palabraElegida() {
+
+    $antePalabra = 0;
+    $palabra = 0;
+    $i = 0;
+    do {
+    echo "Ingrese su nombre: ";
+    $nombre = trim(fgets(STDIN));
+
+    do{
+    echo "Ingrese el número de palabra para jugar: ";
+    $numPalabra = trim(fgets(STDIN));
+    if ($antePalabra == $numPalabra) {
+        echo "¡Debe ingresar otro numero de palabra!";
+    }
+    }while ($antePalabra == $numPalabra);
+
+    $antePalabra = $numPalabra;
+
+    $palabra = cargarColeccionPalabras();
+    $palabra = $palabra[$numPalabra];
+
+    $collecionElegida[$i] = jugarWordix($palabra, $nombre);
+    $i = $i + 1;
+    echo "¿Desea seguir jugando? (s/n)";
+    $respuesta = trim(fgets(STDIN));
+    } while ($respuesta == "s" || $respuesta == "S");
+    $datosPartidas  = cargarPartidas($collecionElegida);
+    return $datosPartidas;
+}
+
+/**
+ * Obtiene una colección de partidas
+ * @param array $partidas
+ */
+
+function cargarPartidas($partidas) {
+
+$cantPartidas = count($partidas);
+for ($i=0; $i<$cantPartidas; $i++){
+$partidas[$i]["palabraWordix"];
+$partidas[$i]["jugador"];
+$partidas[$i]["intentos"];
+$partidas[$i]["puntaje"];
+}
 }
 
 /* ... COMPLETAR ... */
