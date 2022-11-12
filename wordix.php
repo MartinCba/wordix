@@ -322,24 +322,38 @@ function esIntentoGanado($estructuraPalabraIntento)
 /**
  * ****COMPLETAR***** documentación de la intefaz
  */
-function obtenerPuntajeWordix($nroIntento)  /* ****COMPLETAR***** parámetros formales necesarios */
+function obtenerPuntajeWordix($nroIntento, $palabraWordix)  /* ****COMPLETAR***** parámetros formales necesarios */
 {
+    $puntajeLetras = 0;
+
     if ($nroIntento == 1) {
-        $puntajeFinal = 6;
+        $puntajeIntentos = 6;
     } elseif ($nroIntento == 2) {
-        $puntajeFinal = 5;
+        $puntajeIntentos = 5;
     } elseif ($nroIntento == 3) {
-        $puntajeFinal = 4;
+        $puntajeIntentos = 4;
     } elseif ($nroIntento == 4) {
-        $puntajeFinal = 3;
+        $puntajeIntentos = 3;
     } elseif ($nroIntento == 5) {
-        $puntajeFinal = 2;
+        $puntajeIntentos = 2;
     } elseif ($nroIntento == 6) {
-        $puntajeFinal = 1;
+        $puntajeIntentos = 1;
     } else {
-        $puntajeFinal = 0;
+        $puntajeIntentos = 0;
     }
-    return $puntajeFinal;
+
+    for ($i = 0; $i < strlen($palabraWordix); $i++) {
+        $letra = strToLower($palabraWordix[$i]);
+        if ($letra == "a" || $letra == "e" || $letra == "i" || $letra == "o" || $letra == "u") {
+            $puntajeIntentos = $puntajeIntentos + 1;
+        } elseif ($letra == "b" || $letra == "c" || $letra == "d" || $letra == "f" || $letra == "g" || $letra == "h" || $letra == "j" || $letra == "k" || $letra == "l" || $letra == "m") {
+            $puntajeIntentos = $puntajeIntentos + 2;
+        }else {
+            $puntajeIntentos = $puntajeIntentos + 3;
+        }
+    }
+
+    return $puntajeIntentos;
 }
 
 /**
@@ -374,7 +388,7 @@ function jugarWordix($palabraWordix, $nombreUsuario)
 
     if ($ganoElIntento) {
         $nroIntento--;
-        $puntaje = obtenerPuntajeWordix($nroIntento);
+        $puntaje = obtenerPuntajeWordix($nroIntento, $palabraWordix);
         echo "Adivinó la palabra Wordix en el intento " . $nroIntento . "!: " . $palabraIntento . " Obtuvo $puntaje puntos!";
     } else {
         $nroIntento = 0; //reset intento
