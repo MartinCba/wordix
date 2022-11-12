@@ -324,36 +324,34 @@ function esIntentoGanado($estructuraPalabraIntento)
  */
 function obtenerPuntajeWordix($nroIntento, $palabraWordix)  /* ****COMPLETAR***** parámetros formales necesarios */
 {
-    $puntajeLetras = 0;
-
     if ($nroIntento == 1) {
-        $puntajeIntentos = 6;
+        $puntajeFinal = 6;
     } elseif ($nroIntento == 2) {
-        $puntajeIntentos = 5;
+        $puntajeFinal = 5;
     } elseif ($nroIntento == 3) {
-        $puntajeIntentos = 4;
+        $puntajeFinal = 4;
     } elseif ($nroIntento == 4) {
-        $puntajeIntentos = 3;
+        $puntajeFinal = 3;
     } elseif ($nroIntento == 5) {
-        $puntajeIntentos = 2;
+        $puntajeFinal = 2;
     } elseif ($nroIntento == 6) {
-        $puntajeIntentos = 1;
+        $puntajeFinal = 1;
     } else {
-        $puntajeIntentos = 0;
+        $puntajeFinal = 0;
     }
 
     for ($i = 0; $i < strlen($palabraWordix); $i++) {
         $letra = strToLower($palabraWordix[$i]);
         if ($letra == "a" || $letra == "e" || $letra == "i" || $letra == "o" || $letra == "u") {
-            $puntajeIntentos = $puntajeIntentos + 1;
+            $puntajeFinal = $puntajeFinal + 1;
         } elseif ($letra == "b" || $letra == "c" || $letra == "d" || $letra == "f" || $letra == "g" || $letra == "h" || $letra == "j" || $letra == "k" || $letra == "l" || $letra == "m") {
-            $puntajeIntentos = $puntajeIntentos + 2;
-        }else {
-            $puntajeIntentos = $puntajeIntentos + 3;
+            $puntajeFinal = $puntajeFinal + 2;
+        } else {
+            $puntajeFinal = $puntajeFinal + 3;
         }
     }
 
-    return $puntajeIntentos;
+    return $puntajeFinal;
 }
 
 /**
