@@ -34,35 +34,36 @@ function cargarColeccionPalabras()
 
 /**
  * Se obtiene los datos de la partida con palabra elegida
- * @return array 
+ * @return array
  */
 
-function palabraElegida() {
+function palabraElegida()
+{
 
     $antePalabra = 0;
     $palabra = 0;
     $i = 0;
     do {
-    echo "Ingrese su nombre: ";
-    $nombre = trim(fgets(STDIN));
+        echo "Ingrese su nombre: ";
+        $nombre = trim(fgets(STDIN));
 
-    do{
-    echo "Ingrese el número de palabra para jugar: ";
-    $numPalabra = trim(fgets(STDIN));
-    if ($antePalabra == $numPalabra) {
-        echo "¡Debe ingresar otro numero de palabra!";
-    }
-    }while ($antePalabra == $numPalabra);
+        do {
+            echo "Ingrese el número de palabra para jugar: ";
+            $numPalabra = trim(fgets(STDIN));
+            if ($antePalabra == $numPalabra) {
+                echo "¡Debe ingresar otro numero de palabra!";
+            }
+        } while ($antePalabra == $numPalabra);
 
-    $antePalabra = $numPalabra;
+        $antePalabra = $numPalabra;
 
-    $palabra = cargarColeccionPalabras();
-    $palabra = $palabra[$numPalabra];
+        $palabra = cargarColeccionPalabras();
+        $palabra = $palabra[$numPalabra];
 
-    $collecionElegida[$i] = jugarWordix($palabra, $nombre);
-    $i = $i + 1;
-    echo "¿Desea seguir jugando? (s/n)";
-    $respuesta = trim(fgets(STDIN));
+        $collecionElegida[$i] = jugarWordix($palabra, $nombre);
+        $i = $i + 1;
+        echo "¿Desea seguir jugando? (s/n)";
+        $respuesta = trim(fgets(STDIN));
     } while ($respuesta == "s" || $respuesta == "S");
     $datosPartidas  = cargarPartidas($collecionElegida);
     return $datosPartidas;
@@ -73,15 +74,16 @@ function palabraElegida() {
  * @param array $partidas
  */
 
-function cargarPartidas($partidas) {
+function cargarPartidas($partidas)
+{
 
-$cantPartidas = count($partidas);
-for ($i=0; $i<$cantPartidas; $i++){
-$partidas[$i]["palabraWordix"];
-$partidas[$i]["jugador"];
-$partidas[$i]["intentos"];
-$partidas[$i]["puntaje"];
-}
+    $cantPartidas = count($partidas);
+    for ($i = 0; $i < $cantPartidas; $i++) {
+        $partidas[$i]["palabraWordix"];
+        $partidas[$i]["jugador"];
+        $partidas[$i]["intentos"];
+        $partidas[$i]["puntaje"];
+    }
 }
 
 /* ... COMPLETAR ... */
@@ -100,7 +102,7 @@ $partidas[$i]["puntaje"];
 
 //Proceso:
 
-$partida = jugarWordix("MELON", strtolower("MaJo"));
+$partida = jugarWordix("LIMON", strtolower("martin"));
 //print_r($partida);
 //imprimirResultado($partida);
 
