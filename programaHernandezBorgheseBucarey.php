@@ -323,4 +323,3 @@ echo "Juego finalizado! \n";
 echo "\n";
 
 
-$partida = jugarWordix("LIMON", strtolower("martin"));
