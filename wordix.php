@@ -360,7 +360,7 @@ function esIntentoGanado($estructuraPalabraIntento)
  * Este modulo recibe una palabra y un número de intento con los cuales determina un puntaje
  * @param int $nroIntento
  * @param string $palabraWordix
- * @return int
+ * @return int $puntajeFinal
  */
 function obtenerPuntajeWordix($nroIntento, $palabraWordix)
 {
