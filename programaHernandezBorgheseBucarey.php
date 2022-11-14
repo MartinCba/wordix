@@ -58,7 +58,7 @@ function palabraElegida(){
         $palabra = $palabra[$numPalabra];
         $coleccionElegida[$i] = jugarWordix($palabra, $nombre);
         $i = $i + 1;
-        echo "¿Desea seguir jugando? (s/n)";
+        echo "¿Desea seguir jugando? (s/n) ";
         $respuesta = trim(fgets(STDIN));
     } while ($respuesta == "s" || $respuesta == "S");
     $datosPartidas  = cargarPartidas($coleccionElegida);
@@ -81,7 +81,7 @@ function palabraAleatoria(){
     $palabra = $coleccionPalabra[$i];
     $colecionAleatoria[$i] = jugarWordix($palabra, $nombre);
     $i = $i + 1;
-    echo "¿Desea seguir jugando? (s/n)";
+    echo "¿Desea seguir jugando? (s/n) ";
     $respuesta = trim(fgets(STDIN));
     } while ($respuesta == "s" || $respuesta == "S");
     $datosPartidas  = cargarPartidas($colecionAleatoria);
@@ -89,14 +89,36 @@ function palabraAleatoria(){
 }
 
 /**
-<<<<<<< HEAD
+ * Muestra los datos de una partida
+ */
+function mostrarPartida(){
+    $error = false;
+    $partidas = cargarPartidas();
+
+    do {
+    echo "Ingrese un numero de partida: ";
+    $numeroPartida = trim(fgets(STDIN));
+    if ($numeroPartida > 10) {
+        echo "¡ERROR! ¡El numero de partida no existe!";
+        $error = true;
+    }
+    } while ($error);
+
+    $partida = $partidas[$numeroPartida];
+    echo "Partida WORDIX ".$numeroPartida.": palabra ".$partida["palabraWordix"] ."\n";
+    echo "Jugador: ".$partida["jugador"]."\n";
+    echo "Puntaje: ".$partida["puntaje"]."\n";
+    echo "Intento: ";
+    if ($partida["intentos"] != 0){
+        echo "Adivino la palabra en ".$partida["intentos"]. " intentos \n" ;
+    } else {
+        echo "No adivino la palabra \n";
+    }
+}
+
+/**
  * Obtiene una colección de partidas
- * @param array $partidas
- * @return $partidas
-=======
- * Carga coleccion de 10 partidas de Wordix
- * @return array
->>>>>>> bdf12fde8913450debb3a1151d29894be9f2e368
+ * @return $coleccionPartidas
  */
 function cargarPartidas()
 {
@@ -141,11 +163,7 @@ function seleccionarOpcion($usuario)
             $opcion = trim(fgets(STDIN));
         } while ($opcion > 8 || $opcion <= 0);
     }
-<<<<<<< HEAD
-    return $partidas;
-=======
-    return ($opcion);
->>>>>>> bdf12fde8913450debb3a1151d29894be9f2e368
+  // return $partidas;
 }
 
 
