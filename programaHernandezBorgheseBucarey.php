@@ -17,7 +17,7 @@ include_once("wordix.php");
 /**************************************/
 
 /**
- * Obtiene una colección de palabras
+ * Retorna un arreglo indexado que contiene una colección de palabras legales para jugar Wordix
  * @return array
  */
 function cargarColeccionPalabras()
@@ -34,61 +34,56 @@ function cargarColeccionPalabras()
 }
 
 /**
- * Se obtiene los datos de la partida con palabra elegida
+ * Retorna un arreglo indexado compuesto por arreglos asociativos que guardan la información
+ * de cada partida jugada
+ *
  * @return array
  */
-
-function palabraElegida()
+function cargarColeccionPartidas()
 {
-
-    $antePalabra = 0;
-    $palabra = 0;
-    $i = 0;
-    do {
-        echo "Ingrese su nombre: ";
-        $nombre = trim(fgets(STDIN));
-
-        do {
-            echo "Ingrese el número de palabra para jugar: ";
-            $numPalabra = trim(fgets(STDIN));
-            if ($antePalabra == $numPalabra) {
-                echo "¡Debe ingresar otro numero de palabra!";
-            }
-        } while ($antePalabra == $numPalabra);
-
-        $antePalabra = $numPalabra;
-
-        $palabra = cargarColeccionPalabras();
-        $palabra = $palabra[$numPalabra];
-
-        $collecionElegida[$i] = jugarWordix($palabra, $nombre);
-        $i = $i + 1;
-        echo "¿Desea seguir jugando? (s/n)";
-        $respuesta = trim(fgets(STDIN));
-    } while ($respuesta == "s" || $respuesta == "S");
-    $datosPartidas  = cargarPartidas($collecionElegida);
-    return $datosPartidas;
+    $coleccionPartidasBase = [];
+    $coleccionPartidasBase[0] = ["palabraWordix" => "QUESO", "jugador" => "juan", "intentos" => 5, "puntaje" => 10];
+    $coleccionPartidasBase[1] = ["palabraWordix" => "CASAS", "jugador" => "pedro", "intentos" => 3, "puntaje" => 14];
+    $coleccionPartidasBase[2] = ["palabraWordix" => "QUESO", "jugador" => "maria", "intentos" => 6, "puntaje" => 12];
+    $coleccionPartidasBase[3] = ["palabraWordix" => "LIMON", "jugador" => "ana", "intentos" => 2, "puntaje" => 14];
+    $coleccionPartidasBase[4] = ["palabraWordix" => "FUEGO", "jugador" => "juan", "intentos" => 4, "puntaje" => 12];
+    $coleccionPartidasBase[5] = ["palabraWordix" => "HUEVO", "jugador" => "fer", "intentos" => 0, "puntaje" => 0];
+    $coleccionPartidasBase[6] = ["palabraWordix" => "ARBOL", "jugador" => "juan", "intentos" => 4, "puntaje" => 13];
+    $coleccionPartidasBase[7] = ["palabraWordix" => "MELON", "jugador" => "jose", "intentos" => 5, "puntaje" => 11];
+    $coleccionPartidasBase[8] = ["palabraWordix" => "NORTE", "jugador" => "jose", "intentos" => 1, "puntaje" => 17];
+    $coleccionPartidasBase[9] = ["palabraWordix" => "RATON", "jugador" => "juan", "intentos" => 3, "puntaje" => 14];
+    return $coleccionPartidasBase;
 }
 
 /**
- * Carga coleccion de 10 partidas de Wordix
- * @return array
+ * Verifica que el usuario ingrese un número de palabra distinto a los anteriores
+ *
+ * @param string $nombreJugador
+ * @param string $palabra
+ * @param array $coleccionPartidas
+ * @return boolean
  */
-function cargarPartidas()
+function verificaNumeroDiferente($nombreJugador, $palabra, $coleccionPartidas)
 {
-    $coleccionPartidas = [];
-    $coleccionPartidas[0] = ["palabraWordix" => "QUESO", "jugador" => "juan", "intentos" => 5, "puntaje" => 10];
-    $coleccionPartidas[1] = ["palabraWordix" => "CASAS", "jugador" => "pedro", "intentos" => 3, "puntaje" => 14];
-    $coleccionPartidas[2] = ["palabraWordix" => "QUESO", "jugador" => "maria", "intentos" => 6, "puntaje" => 12];
-    $coleccionPartidas[3] = ["palabraWordix" => "LIMON", "jugador" => "ana", "intentos" => 2, "puntaje" => 14];
-    $coleccionPartidas[4] = ["palabraWordix" => "FUEGO", "jugador" => "juan", "intentos" => 4, "puntaje" => 12];
-    $coleccionPartidas[5] = ["palabraWordix" => "HUEVO", "jugador" => "fer", "intentos" => 1, "puntaje" => 16];
-    $coleccionPartidas[6] = ["palabraWordix" => "ARBOL", "jugador" => "juan", "intentos" => 4, "puntaje" => 13];
-    $coleccionPartidas[7] = ["palabraWordix" => "MELON", "jugador" => "jose", "intentos" => 5, "puntaje" => 11];
-    $coleccionPartidas[8] = ["palabraWordix" => "NORTE", "jugador" => "jose", "intentos" => 1, "puntaje" => 17];
-    $coleccionPartidas[9] = ["palabraWordix" => "RATON", "jugador" => "juan", "intentos" => 3, "puntaje" => 14];
-    return $coleccionPartidas;
+    //boolean $palabraDiferente
+    //int $iter
+
+    $palabraDiferente = true;
+    $iter = 0;
+
+    while ($iter < count($coleccionPartidas) && $palabraDiferente == true) {
+        if ($coleccionPartidas[$iter]["jugador"] == $nombreJugador) {
+            if ($coleccionPartidas[$iter]["palabraWordix"] == $palabra) {
+                $palabraDiferente = false;
+            }
+        }
+        $iter++;
+    }
+    return $palabraDiferente;
 }
+
+
+
 
 /**
  * La función muestra un menú de opciones que el usuario puede seleccionar.
