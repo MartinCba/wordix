@@ -101,39 +101,6 @@ function imprimirPartida($coleccionPartidas, $numPartida)
 
 
 
-
-/**
- * La función muestra un menú de opciones que el usuario puede seleccionar.
- * @param string $usuario
- * @return int $opcion
- */
-
-function seleccionarOpcion($usuario)
-{
-    echo "Hola " . $usuario . ", elegí una opción del 1 al 8: \n";
-    echo "********************************************************************************\n";
-    echo "*  1: Jugar con palabra elegida.                                               *\n";
-    echo "*  2: Jugar con palabra aleatoria.                                             *\n";
-    echo "*  3: Mostrar una partida.                                                     *\n";
-    echo "*  4: Mostrar la primer partida ganada de un jugador.                          *\n";
-    echo "*  5: Mostrar el resumen de un jugador.                                        *\n";
-    echo "*  6: Mostrar listado de partidas ordenadas por jugador y palabra.             *\n";
-    echo "*  7: Agregar una palabra a la colección de Wordix.                            *\n";
-    echo "*  8: Salir de wordix.                                                         *\n";
-    echo "********************************************************************************\n";
-    echo "Elegir número de opción: ";
-    $opcion = trim(fgets(STDIN));
-    if ($opcion > 8 || $opcion <= 0) {
-        do {
-            echo "Por favor, elegí una opción válida: ";
-            $opcion = trim(fgets(STDIN));
-        } while ($opcion > 8 || $opcion <= 0);
-    }
-    // return $partidas;
-}
-
-
-
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
