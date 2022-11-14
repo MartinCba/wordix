@@ -83,6 +83,34 @@ function verificaNumeroDiferente($nombreJugador, $palabra, $coleccionPartidas)
 }
 
 /**
+ * Cuenta la cantidad de partidas de un jugador, retorna true si es igual o mayor al número de palabras
+ * @param string $nombreJugador
+ * @param array $coleccionPartidas
+ * @param int $cantPalabras
+ * @return boolean
+ */
+function cuentaPartidasJugador($nombreJugador, $coleccionPartidas, $cantPalabras)
+{
+    //boolean $jugadorExcedido
+    //int $iter, $contador
+    $jugadorExcedido = false;
+    $iter = 0;
+    $contador = 0;
+
+    do {
+        if ($coleccionPartidas[$iter]["jugador"] == $nombreJugador) {
+            $contador++;
+            if ($contador >= $cantPalabras) {
+                $jugadorExcedido = true;
+            }
+        }
+        $iter++;
+    } while ($iter < count($coleccionPartidas) && $jugadorExcedido == false);
+
+    return $jugadorExcedido;
+}
+
+/**
  * Imprime por pantalla los datos de una partida
  *
  * @param array $coleccionPartidas
@@ -202,13 +230,13 @@ function resumenDelJugador($nombreJugador, $coleccionPartidas)
         "intento1" => 0, "intento2" => 0, "intento3" => 0,
         "intento4" => 0, "intento5" => 0, "intento6" => 0
     ];
-    for ($iter = 0; $iter < count($coleccionPartidas); $iter++) {
-        if ($coleccionPartidas[$iter]["jugador"] == $nombreJugador) {
+    for ($i = 0; $i < count($coleccionPartidas); $i++) {
+        if ($coleccionPartidas[$i]["jugador"] == $nombreJugador) {
             $resumenJugador["partidas"] += 1;
-            if ($coleccionPartidas[$iter]["puntaje"] > 0) {
-                $resumenJugador["puntaje"] += $coleccionPartidas[$iter]["puntaje"];
+            if ($coleccionPartidas[$i]["puntaje"] > 0) {
+                $resumenJugador["puntaje"] += $coleccionPartidas[$i]["puntaje"];
                 $resumenJugador["victorias"] += 1;
-                switch ($coleccionPartidas[$iter]["intentos"]) {
+                switch ($coleccionPartidas[$i]["intentos"]) {
                     case 1:
                         $resumenJugador["intento1"] += 1;
                         break;
@@ -303,7 +331,7 @@ function buscarJugador($nombreJugador, $coleccionPartidas)
 }
 
 /**
- * Función de comparación
+ * Función de comparación utilizada para ordenar por nombre de palabra
  * @param string $a
  * @param string $b
  * @return int
@@ -320,6 +348,23 @@ function cmp($a, $b)
     return $orden;
 }
 
+/**
+ * Función de comparación utilizada para ordenar por nombre de jugador
+ * @param string $a
+ * @param string $b
+ * @return int
+ */
+function cmp2($a, $b)
+{
+    if ($a["jugador"] == $b["jugador"]) {
+        $orden = 0;
+    } elseif ($a["jugador"] < $b["jugador"]) {
+        $orden = -1;
+    } else {
+        $orden = 1;
+    }
+    return $orden;
+}
 
 
 
@@ -345,14 +390,17 @@ do {
 
             // jugar al Wordix con una palabra elegida
             $nombreJugador = solicitarJugador();
-            echo "Jugará con una palabra elegida entre las " . count($coleccionPalabras) . " 
+            echo "Jugará con una palabra elegida entre las " . count($coleccionPalabras) . "
             palabras que tiene cargado el juego\n";
             echo "Ingrese un número entre 1 y " . count($coleccionPalabras) . " para jugar: ";
             do {
                 // verifica número correcto
                 $numPalabra = solicitarNumeroEntre(1, count($coleccionPalabras));
-                // verifica número no elegido anteriormente
-                $numDiferente = verificaNumeroDiferente($nombreJugador, $coleccionPalabras[$numPalabra - 1], $coleccionPartidas);
+                // filtra si el jugador ya jugo todas las palabras
+                if (cuentaPartidasJugador($nombreJugador, $coleccionPartidas, count($coleccionPalabras)) == false) {
+                    // verifica número no elegido anteriormente
+                    $numDiferente = verificaNumeroDiferente($nombreJugador, $coleccionPalabras[$numPalabra - 1], $coleccionPartidas);
+                }
                 if (!$numDiferente) {
                     echo "El número ingresado corresponde a una palabra ya jugada \n";
                     echo "Por favor ingrese un número distinto: ";
@@ -369,13 +417,16 @@ do {
 
             // jugar al Wordix con una palabra aleatoria
             $nombreJugador = solicitarJugador();
-            echo "Jugará con una palabra elegida al azar de entre las " . count($coleccionPalabras) . " 
+            echo "Jugará con una palabra elegida al azar de entre las " . count($coleccionPalabras) . "
             palabras que tiene cargado el juego\n";
             do {
                 // genera un número aleatorio
                 $numPalabra = random_int(1, count($coleccionPalabras));
-                // verifica número no elegido anteriormente
-                $numDiferente = verificaNumeroDiferente($nombreJugador, $coleccionPalabras[$numPalabra - 1], $coleccionPartidas);
+                // filtra si el jugador ya jugo todas las palabras
+                if (cuentaPartidasJugador($nombreJugador, $coleccionPartidas, count($coleccionPalabras)) == false) {
+                    // verifica número no elegido anteriormente
+                    $numDiferente = verificaNumeroDiferente($nombreJugador, $coleccionPalabras[$numPalabra - 1], $coleccionPartidas);
+                }
             } while (!$numDiferente);
             echo "\n";
             echo "El número de palabra elegido al azar es el: " . $numPalabra . "\n";
@@ -440,7 +491,9 @@ do {
         case 6:
 
             // Para mostrar listado de partidas ordenadas por jugador y por palabras
-            // uasort($coleccionPartidas, );
+            uasort($coleccionPartidas, 'cmp');
+            uasort($coleccionPartidas, 'cmp2');
+
             print_r($coleccionPartidas);
             echo "\n";
             echo "Ingrese cualquier valor para volver al menú principal u 8 para finalizar: ";
