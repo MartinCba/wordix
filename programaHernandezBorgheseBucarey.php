@@ -22,7 +22,7 @@ include_once("wordix.php");
  */
 function cargarColeccionPalabras()
 {
-    $coleccionPalabras = [
+    $coleccionPalabrasBase = [
         "MUJER", "QUESO", "FUEGO", "CASAS", "RASGO",
         "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
         "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
@@ -30,7 +30,7 @@ function cargarColeccionPalabras()
         "MONOS", "ARBOL", "GORRO", "NORTE", "RATON",
     ];
 
-    return ($coleccionPalabras);
+    return ($coleccionPalabrasBase);
 }
 
 /**
@@ -66,20 +66,37 @@ function cargarColeccionPartidas()
 function verificaNumeroDiferente($nombreJugador, $palabra, $coleccionPartidas)
 {
     //boolean $palabraDiferente
-    //int $iter
+    //int $i
 
     $palabraDiferente = true;
-    $iter = 0;
+    $i = 0;
 
-    while ($iter < count($coleccionPartidas) && $palabraDiferente == true) {
-        if ($coleccionPartidas[$iter]["jugador"] == $nombreJugador) {
-            if ($coleccionPartidas[$iter]["palabraWordix"] == $palabra) {
+    while ($i < count($coleccionPartidas) && $palabraDiferente == true) {
+        if ($coleccionPartidas[$i]["jugador"] == $nombreJugador) {
+            if ($coleccionPartidas[$i]["palabraWordix"] == $palabra) {
                 $palabraDiferente = false;
             }
         }
-        $iter++;
+        $i++;
     }
     return $palabraDiferente;
+}
+
+/**
+ * Imprime por pantalla los datos de una partida
+ *
+ * @param array $coleccionPartidas
+ * @param int $numPartida
+ *
+ */
+function imprimirPartida($coleccionPartidas, $numPartida)
+{
+    echo "--------------------------------------------------------------------------------\n";
+    echo "Partida WORDIX N°" . $numPartida . ": Palabra " . $coleccionPartidas[$numPartida - 1]["palabraWordix"] . "\n";
+    echo "Jugador: " . $coleccionPartidas[$numPartida - 1]["jugador"] . "\n";
+    echo "Puntaje: " . $coleccionPartidas[$numPartida - 1]["puntaje"] . " puntos\n";
+    echo "Intentos: " . $coleccionPartidas[$numPartida - 1]["intentos"] . "\n";
+    echo "--------------------------------------------------------------------------------\n";
 }
 
 
@@ -112,7 +129,7 @@ function seleccionarOpcion($usuario)
             $opcion = trim(fgets(STDIN));
         } while ($opcion > 8 || $opcion <= 0);
     }
-  // return $partidas;
+    // return $partidas;
 }
 
 
