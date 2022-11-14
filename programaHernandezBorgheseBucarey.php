@@ -33,12 +33,11 @@ function cargarColeccionPalabras()
 }
 
 /**
- * Se obtiene los datos de la partida con palabra elegida
+ * Se obtiene los datos de la partida con una palabra elegida
  * @return array
  */
-
-function palabraElegida()
-{
+function palabraElegida(){
+    //int $antePalabra, $palabra, $i, $numPalabra,  string $nombre, $respuesta, array $coleccionElegida, $datosPartidas
 
     $antePalabra = 0;
     $palabra = 0;
@@ -46,7 +45,6 @@ function palabraElegida()
     do {
         echo "Ingrese su nombre: ";
         $nombre = trim(fgets(STDIN));
-
         do {
             echo "Ingrese el número de palabra para jugar: ";
             $numPalabra = trim(fgets(STDIN));
@@ -54,24 +52,45 @@ function palabraElegida()
                 echo "¡Debe ingresar otro numero de palabra!";
             }
         } while ($antePalabra == $numPalabra);
-
         $antePalabra = $numPalabra;
-
         $palabra = cargarColeccionPalabras();
         $palabra = $palabra[$numPalabra];
-
-        $collecionElegida[$i] = jugarWordix($palabra, $nombre);
+        $coleccionElegida[$i] = jugarWordix($palabra, $nombre);
         $i = $i + 1;
         echo "¿Desea seguir jugando? (s/n)";
         $respuesta = trim(fgets(STDIN));
     } while ($respuesta == "s" || $respuesta == "S");
-    $datosPartidas  = cargarPartidas($collecionElegida);
+    $datosPartidas  = cargarPartidas($coleccionElegida);
+    return $datosPartidas;
+}
+
+/**
+ * Se obtiene los datos de la partida con una palabra aleatoria
+ * @return array
+ */
+function palabraAleatoria(){
+    //int $i, string $nombre, $palabra, $respuesta,  array $coleccionPalabra, $coleccionAleatoria, $datosPartidas
+
+    $i = 0;
+    $coleccionPalabra = cargarColeccionPalabras();
+    shuffle($coleccionPalabra);
+    do {
+    echo "Ingrese su nombre: ";
+    $nombre = trim(fgets(STDIN));
+    $palabra = $coleccionPalabra[$i];
+    $colecionAleatoria[$i] = jugarWordix($palabra, $nombre);
+    $i = $i + 1;
+    echo "¿Desea seguir jugando? (s/n)";
+    $respuesta = trim(fgets(STDIN));
+    } while ($respuesta == "s" || $respuesta == "S");
+    $datosPartidas  = cargarPartidas($colecionAleatoria);
     return $datosPartidas;
 }
 
 /**
  * Obtiene una colección de partidas
  * @param array $partidas
+ * @return $partidas
  */
 
 function cargarPartidas($partidas)
@@ -84,6 +103,7 @@ function cargarPartidas($partidas)
         $partidas[$i]["intentos"];
         $partidas[$i]["puntaje"];
     }
+    return $partidas;
 }
 
 /* ... COMPLETAR ... */
@@ -101,6 +121,7 @@ function cargarPartidas($partidas)
 
 
 //Proceso:
+
 
 $partida = jugarWordix("LIMON", strtolower("martin"));
 //print_r($partida);
