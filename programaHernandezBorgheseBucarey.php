@@ -112,7 +112,7 @@ function seleccionarOpcion($usuario)
             $opcion = trim(fgets(STDIN));
         } while ($opcion > 8 || $opcion <= 0);
     }
-    return ($opcion);
+  // return $partidas;
 }
 
 
@@ -132,6 +132,7 @@ function seleccionarOpcion($usuario)
 
 
 //Proceso:
+
 
 $partida = jugarWordix("LIMON", strtolower("martin"));
 //print_r($partida);
