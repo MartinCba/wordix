@@ -503,7 +503,7 @@ do {
 
         case 7:
 
-            // Verifica palabra para agregarla a la colección
+            // Verifica palabra para agregarla a la colección!
             $pal5Letras = leerPalabra5Letras();
 
             // array_push($coleccionPalabras, $pal5Letras);
