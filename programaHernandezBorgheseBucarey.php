@@ -478,7 +478,7 @@ do {
 
         case 5:
 
-            //Para mostrar resumen de jugador  1
+            //Para mostrar resumen de jugador  
             $nombreJugador = solicitarJugador();
 
             resumenDelJugador($nombreJugador, $coleccionPartidas);
